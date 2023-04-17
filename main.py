@@ -3,7 +3,8 @@ from data import db_session
 from data.users import User
 from forms.user import LoginForm, RegisterForm
 from flask_login import LoginManager, login_required, login_user, logout_user
-
+from PIL import Image
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Ightksdlcz_endfignxkurjkfj7892046'
@@ -19,11 +20,23 @@ def load_user(user_id):
 
 
 @app.route('/')
-@app.route('/home_page')
-def home_page():
+def start_page():
     param = {}
-    param['username'] = "Пользователь"
+    param['username'] = 'пользователь'
     param['title'] = "Home page"
+    return render_template('home_page.html', **param)
+
+
+@app.route('/home_page/<username>')
+def home_page(username):
+    param = {}
+    param['username'] = username
+    param['title'] = "Home page"
+    image_list = [
+        {'name'},
+        {},
+        {}
+    ]
     return render_template('home_page.html', **param)
 
 
@@ -48,6 +61,7 @@ def register():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
+        os.mkdir(path=f'my_images/{user.name}')
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
@@ -61,7 +75,7 @@ def login():
             User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect("/")
+            return redirect(f"/home_page/{user.name}")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
