@@ -22,13 +22,13 @@ def load_user(user_id):
 @app.route('/home_page')
 def home_page():
     param = {}
-    param['username'] = "user"
+    param['username'] = "Пользователь"
     param['title'] = "Home page"
     return render_template('home_page.html', **param)
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def reqister():
+def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
