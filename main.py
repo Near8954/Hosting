@@ -28,7 +28,7 @@ def start_page():
     return render_template('home_page.html', **param)
 
 
-@app.route('/<username>_file_upload', methods=['POST', 'GET'])
+@app.route('/home_page/<username>_file_upload', methods=['POST', 'GET'])
 def sample_file_upload(username):
     UPLOAD_PATH = f'my_images/{username}/'
     if request.method == 'GET':
@@ -37,7 +37,7 @@ def sample_file_upload(username):
         f = request.files['file']
         print(f.filename)
         open(os.path.join(UPLOAD_PATH, f.filename), 'wb').write(f.read())
-        return "Форма отправлена"
+        return redirect(f'/home_page/{username}')
 
 
 @app.route('/home_page/<username>')
