@@ -1,5 +1,10 @@
 {% extends "base.html" %} <!--Расширяем этот файлик-->
 {% block title %}Home page{% endblock %}
 {% block content %}
+
     <h1>Привет, {{ username }}!</h1>
+    <form method="post" enctype="multipart/form-data">
+        <button type="submit" class="btn btn-primary">Загрузить изображение</button>
+    </form>    
+
 {% endblock %}

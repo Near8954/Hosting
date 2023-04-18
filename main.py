@@ -40,8 +40,10 @@ def sample_file_upload(username):
         return redirect(f'/home_page/{username}')
 
 
-@app.route('/home_page/<username>')
+@app.route('/home_page/<username>', methods=['POST', 'GET'])
 def home_page(username):
+    if request.method == 'POST':
+        return redirect(f'/home_page/{username}_file_upload')
     param = {}
     param['username'] = username
     param['title'] = "Home page"
