@@ -1,10 +1,11 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request, url_for
 from data import db_session
 from data.users import User
 from forms.user import LoginForm, RegisterForm
 from flask_login import LoginManager, login_required, login_user, logout_user
 from PIL import Image
 import os
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Ightksdlcz_endfignxkurjkfj7892046'
@@ -25,6 +26,18 @@ def start_page():
     param['username'] = 'пользователь'
     param['title'] = "Home page"
     return render_template('home_page.html', **param)
+
+
+@app.route('/<username>_file_upload', methods=['POST', 'GET'])
+def sample_file_upload(username):
+    UPLOAD_PATH = f'my_images/{username}/'
+    if request.method == 'GET':
+        return render_template('file_load.html')
+    elif request.method == 'POST':
+        f = request.files['file']
+        print(f.filename)
+        open(os.path.join(UPLOAD_PATH, f.filename), 'wb').write(f.read())
+        return "Форма отправлена"
 
 
 @app.route('/home_page/<username>')
