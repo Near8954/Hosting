@@ -6,7 +6,6 @@ from flask_login import LoginManager, login_required, login_user, logout_user
 from PIL import Image
 import os
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Ightksdlcz_endfignxkurjkfj7892046'
 
@@ -79,6 +78,22 @@ def register():
         os.mkdir(path=f'my_images/{user.name}')
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
+
+@app.route('/show_photo', methods=['GET', 'POST'])
+def show_photo():
+    ans = ''
+    photos = ['5a585c04e0a259f09aa3d420448743a5.jpg', 'k5i3qZvnRFQ.jpg']
+    '''os.chdir('my_images/egor')
+    for root, dirs, files in os.walk("."):
+        for filename in files:
+            photos.append(filename)
+    print(photos)'''
+    for photo in photos:
+        sup = f'''<img src="egor/{photo}" 
+               alt="здесь должна была быть картинка, но не нашлась">'''
+        ans += sup
+    return ans
 
 
 @app.route('/login', methods=['GET', 'POST'])
