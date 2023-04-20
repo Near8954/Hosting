@@ -29,7 +29,7 @@ def start_page():
 
 @app.route('/home_page/<username>_file_upload', methods=['POST', 'GET'])
 def sample_file_upload(username):
-    UPLOAD_PATH = f'my_images/{username}/'
+    UPLOAD_PATH = f'static/img/{username}/'
     if request.method == 'GET':
         return render_template('file_load.html')
     elif request.method == 'POST':
@@ -75,24 +75,28 @@ def register():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        os.mkdir(path=f'my_images/{user.name}')
+        os.mkdir(path=f'static/img/{user.name}')
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
 
 @app.route('/show_photo', methods=['GET', 'POST'])
 def show_photo():
-    ans = ''
-    photos = ['5a585c04e0a259f09aa3d420448743a5.jpg', 'k5i3qZvnRFQ.jpg']
-    '''os.chdir('my_images/egor')
+    ans = '<!DOCTYPE html><html><head><meta charset="utf-8">' \
+          '<title>Мои изображения</title></head><body>'
+    photos = list()
+    os.chdir('static/img/nemo')
     for root, dirs, files in os.walk("."):
         for filename in files:
             photos.append(filename)
-    print(photos)'''
+    os.chdir('..')
+    os.chdir('..')
+    os.chdir('..')
     for photo in photos:
-        sup = f'''<img src="egor/{photo}" 
-               alt="здесь должна была быть картинка, но не нашлась">'''
-        ans += sup
+        ans += f'''<p><img src='/static/img/nemo/{photo}'></p>'''
+
+    ans += '</body></html>'
+
     return ans
 
 
