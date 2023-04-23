@@ -3,8 +3,8 @@ from data import db_session
 from data.users import User
 from forms.user import LoginForm, RegisterForm
 from flask_login import LoginManager, login_required, login_user, logout_user
-from PIL import Image
 import os
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Ightksdlcz_endfignxkurjkfj7892046'
@@ -85,7 +85,7 @@ def register():
 @app.route('/show_photo/', methods=['GET', 'POST'])
 def show_photo():
     username = user_name
-    print(username)
+
     ans = '<!DOCTYPE html><html><head><meta charset="utf-8">' \
           '<title>Мои изображения</title></head><body>'
     photos = list()
