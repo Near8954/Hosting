@@ -12,6 +12,8 @@ app.config['SECRET_KEY'] = 'Ightksdlcz_endfignxkurjkfj7892046'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+user_name = ''
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -80,12 +82,14 @@ def register():
     return render_template('register.html', title='Регистрация', form=form)
 
 
-@app.route('/show_photo', methods=['GET', 'POST'])
+@app.route('/show_photo/', methods=['GET', 'POST'])
 def show_photo():
+    username = user_name
+    print(username)
     ans = '<!DOCTYPE html><html><head><meta charset="utf-8">' \
           '<title>Мои изображения</title></head><body>'
     photos = list()
-    os.chdir('static/img/nemo')
+    os.chdir(f'static/img/{username}')
     for root, dirs, files in os.walk("."):
         for filename in files:
             photos.append(filename)
@@ -93,7 +97,7 @@ def show_photo():
     os.chdir('..')
     os.chdir('..')
     for photo in photos:
-        ans += f'''<p><img src='/static/img/nemo/{photo}'></p>'''
+        ans += f'''<p><img src='/static/img/{username}/{photo}'></p>'''
 
     ans += '</body></html>'
 
@@ -102,6 +106,7 @@ def show_photo():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global user_name
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -109,6 +114,8 @@ def login():
             User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
+            user_name = user.name
+
             return redirect(f"/home_page/{user.name}")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
