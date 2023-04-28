@@ -4,7 +4,7 @@ from data.users import User
 from forms.user import LoginForm, RegisterForm
 from flask_login import LoginManager, login_required, login_user, logout_user
 import os
-
+from PIL import Image
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Ightksdlcz_endfignxkurjkfj7892046'
@@ -96,8 +96,12 @@ def show_photo():
     os.chdir('..')
     os.chdir('..')
     os.chdir('..')
+
     for photo in photos:
-        ans += f'''<p><img src='/static/img/{username}/{photo}'></p>'''
+        im = Image.open(f'static/img/{username}/{photo}')
+        ans += f'''<p><img src='/static/img/{username}/{photo}' width="800" height="600"
+        style="vertical-align:middle"
+    ><br>Filename: {photo};<br>Original size: {im.size}</p>'''
 
     ans += '</body></html>'
 
