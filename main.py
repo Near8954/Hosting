@@ -82,7 +82,10 @@ def show_photo():
     username = user_name
 
     ans = '<!DOCTYPE html><html><head><meta charset="utf-8">' \
-          '<title>Мои изображения</title></head><body>'
+          '<title>Мои изображения</title></head><body>' \
+        f'<form action="/home_page/{username}">' \
+          '<button name="button">Вернуться на главную страницу</button>' \
+          '</from>'
     photos = list()
     os.chdir(f'static/img/{username}')
     for root, dirs, files in os.walk("."):
