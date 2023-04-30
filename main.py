@@ -97,7 +97,7 @@ def show_photo():
 
     for photo in photos:
         im = Image.open(f'static/img/{username}/{photo}')
-        ans += f'''<p><img src='/static/img/{username}/{photo}' width="800" height="600"
+        ans += f'''<p><img src='/static/img/{username}/{photo}' width="800"
         style="vertical-align:middle"
     ><br>Filename: {photo};<br>Original size: {im.size}</p>'''
 
