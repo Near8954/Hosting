@@ -48,11 +48,6 @@ def home_page(username):
     param = {}
     param['username'] = username
     param['title'] = "Home page"
-    image_list = [
-        {'name'},
-        {},
-        {}
-    ]
     return render_template('home_page.html', **param)
 
 

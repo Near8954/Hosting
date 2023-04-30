@@ -4,10 +4,14 @@
 
     <h1>Привет, {{ username }}!</h1>
     <form method="post" enctype="multipart/form-data">
+        {% if current_user.is_authenticated %}
         <button type="submit" class="btn btn-primary">Загрузить изображение</button>
+        {% endif %}
     </form>
     <form action="/show_photo/">
-    <input type="submit" value="Просмотр сохраненных изображений" />
+    {% if current_user.is_authenticated %}
+        <input type="submit" value="Просмотр сохраненных изображений" />
+    {% endif %}
 </form>
 
 
